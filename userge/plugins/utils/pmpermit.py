@@ -59,7 +59,7 @@ async def _init() -> None:
     allow_via_bot=False,
 )
 async def allow(message: Message):
-    """allows to pm"""
+    """ allows to pm """
     userid = await get_id(message)
     if userid:
         if userid in pmCounter:
@@ -69,10 +69,10 @@ async def allow(message: Message):
             {"_id": userid}, {"$set": {"status": "allowed"}}, upsert=True
         )
         if a.matched_count:
-            await message.edit("`Already approved to direct message`", del_in=3)
+            await message.edit("`Already approved to direct message`", del_in=7)
         else:
             await (await userge.get_users(userid)).unblock()
-            await message.edit("`Approved to direct message`", del_in=3)
+            await message.edit("`Approved to direct message`", del_in=7)
 
         if userid in PMPERMIT_MSG:
             await userge.delete_messages(userid, message_ids=PMPERMIT_MSG[userid])
@@ -81,7 +81,7 @@ async def allow(message: Message):
     else:
         await message.edit(
             "I need to reply to a user or provide the username/id or be in a private chat",
-            del_in=3,
+            del_in=7,
         )
 
 
@@ -98,20 +98,20 @@ async def allow(message: Message):
     allow_via_bot=False,
 )
 async def denyToPm(message: Message):
-    """disallows to pm"""
+    """ disallows to pm """
     userid = await get_id(message)
     if userid:
         if userid in Config.ALLOWED_CHATS:
             Config.ALLOWED_CHATS.remove(userid)
         a = await ALLOWED_COLLECTION.delete_one({"_id": userid})
         if a.deleted_count:
-            await message.edit("`Prohibitted to direct message`", del_in=3)
+            await message.edit("`Prohibitted to direct message`", del_in=7)
         else:
-            await message.edit("`Nothing was changed`", del_in=3)
+            await message.edit("`Nothing was changed`", del_in=7)
     else:
         await message.edit(
             "I need to reply to a user or provide the username/id or be in a private chat",
-            del_in=3,
+            del_in=7,
         )
 
 
@@ -142,14 +142,14 @@ async def get_id(message: Message):
     allow_channels=False,
 )
 async def pmguard(message: Message):
-    """enable or disable auto pm handler"""
+    """ enable or disable auto pm handler """
     global pmCounter  # pylint: disable=global-statement
     if Config.ALLOW_ALL_PMS:
         Config.ALLOW_ALL_PMS = False
-        await message.edit("`PM_guard activated`", del_in=3, log=__name__)
+        await message.edit("`PM_guard activated`", del_in=7, log=__name__)
     else:
         Config.ALLOW_ALL_PMS = True
-        await message.edit("`PM_guard deactivated`", del_in=3, log=__name__)
+        await message.edit("`PM_guard deactivated`", del_in=7, log=__name__)
         pmCounter.clear()
     await SAVED_SETTINGS.update_one(
         {"_id": "PM GUARD STATUS"},
@@ -176,16 +176,16 @@ async def pmguard(message: Message):
     allow_channels=False,
 )
 async def set_custom_nopm_message(message: Message):
-    """setup custom pm message"""
+    """ setup custom pm message """
     global noPmMessage  # pylint: disable=global-statement
     if "-r" in message.flags:
-        await message.edit("`Custom NOpm message reset`", del_in=3, log=True)
+        await message.edit("`Custom NOpm message reset`", del_in=7, log=True)
         noPmMessage = bk_noPmMessage
         await SAVED_SETTINGS.find_one_and_delete({"_id": "CUSTOM NOPM MESSAGE"})
     else:
         string = message.input_or_reply_raw
         if string:
-            await message.edit("`Custom NOpm message saved`", del_in=3, log=True)
+            await message.edit("`Custom NOpm message saved`", del_in=7, log=True)
             noPmMessage = string
             await SAVED_SETTINGS.update_one(
                 {"_id": "CUSTOM NOPM MESSAGE"}, {"$set": {"data": string}}, upsert=True
@@ -213,16 +213,16 @@ async def set_custom_nopm_message(message: Message):
     allow_channels=False,
 )
 async def set_custom_blockpm_message(message: Message):
-    """setup custom blockpm message"""
+    """ setup custom blockpm message """
     global blocked_message  # pylint: disable=global-statement
     if "-r" in message.flags:
-        await message.edit("`Custom BLOCKpm message reset`", del_in=3, log=True)
+        await message.edit("`Custom BLOCKpm message reset`", del_in=7, log=True)
         blocked_message = bk_blocked_message
         await SAVED_SETTINGS.find_one_and_delete({"_id": "CUSTOM BLOCKPM MESSAGE"})
     else:
         string = message.input_or_reply_raw
         if string:
-            await message.edit("`Custom BLOCKpm message saved`", del_in=3, log=True)
+            await message.edit("`Custom BLOCKpm message saved`", del_in=7, log=True)
             blocked_message = string
             await SAVED_SETTINGS.update_one(
                 {"_id": "CUSTOM BLOCKPM MESSAGE"},
@@ -239,7 +239,7 @@ async def set_custom_blockpm_message(message: Message):
     allow_channels=False,
 )
 async def view_current_noPM_msg(message: Message):
-    """view current pm message"""
+    """ view current pm message """
     await message.edit(f"--current PM message--\n\n{noPmMessage}")
 
 
@@ -249,7 +249,7 @@ async def view_current_noPM_msg(message: Message):
     allow_channels=False,
 )
 async def view_current_blockPM_msg(message: Message):
-    """view current block pm message"""
+    """ view current block pm message """
     await message.edit(f"--current blockPM message--\n\n{blocked_message}")
 
 
@@ -265,7 +265,7 @@ async def view_current_blockPM_msg(message: Message):
     group=-1,
 )
 async def uninvitedPmHandler(message: Message):
-    """pm message handler"""
+    """ pm message handler """
     user_dict = await userge.get_user_dict(message.from_user.id)
     user_dict.update({"chat": message.chat.title or "this group"})
     if message.from_user.is_verified:
@@ -295,7 +295,7 @@ async def uninvitedPmHandler(message: Message):
         PMPERMIT_MSG[message.from_user.id] = (
             await message.reply(
                 noPmMessage.format_map(SafeDict(**user_dict))
-                + "\n`- Protected by USERGE-X`"
+                + "\n`- Protected by Black Magic`"
             )
         ).message_id
         await asyncio.sleep(1)
@@ -307,7 +307,7 @@ async def uninvitedPmHandler(message: Message):
     allow_via_bot=False,
 )
 async def outgoing_auto_approve(message: Message):
-    """outgoing handler"""
+    """ outgoing handler """
     userID = message.chat.id
     if userID in pmCounter:
         del pmCounter[userID]
