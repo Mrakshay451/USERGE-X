@@ -27,8 +27,9 @@ noPmMessage = bk_noPmMessage = (
     "Hello {fname} this is an automated message\n"
     "Please wait until you get approved to direct message "
     "And please dont spam until then "
+    "Otherwise you may get blocked automatically"
 )
-blocked_message = bk_blocked_message = "**You were automatically blocked**"
+blocked_message = bk_blocked_message = "**Haha! You were automatically blocked**"
 
 
 async def _init() -> None:
@@ -69,7 +70,7 @@ async def allow(message: Message):
             {"_id": userid}, {"$set": {"status": "allowed"}}, upsert=True
         )
         if a.matched_count:
-            await message.edit("`Already approved to direct message`", del_in=7)
+            await message.edit("`Bruh! Already approved to direct message`", del_in=7)
         else:
             await (await userge.get_users(userid)).unblock()
             await message.edit("`Approved to direct message`", del_in=7)
@@ -105,7 +106,7 @@ async def denyToPm(message: Message):
             Config.ALLOWED_CHATS.remove(userid)
         a = await ALLOWED_COLLECTION.delete_one({"_id": userid})
         if a.deleted_count:
-            await message.edit("`Prohibitted to direct message`", del_in=7)
+            await message.edit("`Oops! Prohibitted to direct message`", del_in=7)
         else:
             await message.edit("`Nothing was changed`", del_in=7)
     else:
@@ -287,8 +288,9 @@ async def uninvitedPmHandler(message: Message):
             pmCounter[message.from_user.id] += 1
             await message.reply(
                 f"You have {pmCounter[message.from_user.id]} out of 4 **Warnings**\n"
-                "Please wait until you get approved to pm !",
-                del_in=5,
+                "Please wait until you get approved to pm !"
+                "Otherwise you may get blocked automatically",
+                del_in=7,
             )
     else:
         pmCounter.update({message.from_user.id: 1})
@@ -317,3 +319,4 @@ async def outgoing_auto_approve(message: Message):
     )
     user_dict = await userge.get_user_dict(userID)
     await CHANNEL.log(f"**#AUTO_APPROVED**\n{user_dict['mention']}")
+    
