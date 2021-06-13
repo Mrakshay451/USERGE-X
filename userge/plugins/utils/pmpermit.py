@@ -317,3 +317,4 @@ async def outgoing_auto_approve(message: Message):
     )
     user_dict = await userge.get_user_dict(userID)
     await CHANNEL.log(f"**#AUTO_APPROVED**\n{user_dict['mention']}")
+    
