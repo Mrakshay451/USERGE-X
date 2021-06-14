@@ -259,7 +259,6 @@ class Bot_Alive:
     def alive_default_imgs() -> str:
         alive_imgs = [
             "https://telegra.ph/file/ce7929b5eaf99a619c113.jpg",
-            "https://telegra.ph/file/25118e89666482eb1526f.jpg",
         ]
         return rand_array(alive_imgs)
 
