@@ -93,9 +93,9 @@ async def send_alive_message(message: Message) -> None:
         reply_markup = None
         file_id = _USER_CACHED_MEDIA
         caption += (
-            f"\n⚡️  <a href={Config.UPSTREAM_REPO}><b>REPO</b></a>"
+            f"\n  <a href={Config.UPSTREAM_REPO}><b>REPO</b></a>"
             "    <code>|</code>    "
-            "👥  <a href='https://t.me/useless_x'><b>SUPPORT</b></a>"
+            "  <a href='https://t.me/useless_x'><b>SUPPORT</b></a>"
         )
     if not Config.ALIVE_MEDIA:
         await client.send_photo(
@@ -227,11 +227,11 @@ class Bot_Alive:
     @staticmethod
     def alive_info() -> str:
         alive_info_ = f"""
-<a href="https://telegram.dog/x_xtests"><b>USERGE-X Bot</a> is Up and Running.</b>
+<a href="https://telegram.dog/x_xtests"><b>USERGE-X</a> is Up and Running.</b>
 
-      <b>Python :</b>  <code>v{versions.__python_version__}</code>
-      <b>Pyrogram :</b>  <code>v{versions.__pyro_version__}</code>
-      <b>𝑿 :</b>  <code>v{get_version()}</code>
+       <b>Python :</b>    <code>v{versions.__python_version__}</code>
+       <b>Pyrogram :</b>    <code>v{versions.__pyro_version__}</code>
+       <b>𝑿 :</b>    <code>v{get_version()}</code>
 
 <b>{Bot_Alive._get_mode()}</b>    <code>|</code> UPTIME <b>{userge.uptime}</b>
 """
@@ -258,7 +258,7 @@ class Bot_Alive:
     @staticmethod
     def alive_default_imgs() -> str:
         alive_imgs = [
-            
+            "https://telegra.ph/file/fa9d9b9e4e0f8d8cbfc3f.mp4",
         ]
         return rand_array(alive_imgs)
 
