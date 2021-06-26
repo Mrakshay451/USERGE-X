@@ -93,9 +93,9 @@ async def send_alive_message(message: Message) -> None:
         reply_markup = None
         file_id = _USER_CACHED_MEDIA
         caption += (
-            f"\n  <a href={Config.UPSTREAM_REPO}><b>REPO</b></a>"
+            f"\n⚡️  <a href={Config.UPSTREAM_REPO}><b>REPO</b></a>"
             "    <code>|</code>    "
-            "  <a href='https://t.me/useless_x'><b>SUPPORT</b></a>"
+            "👥  <a href='https://t.me/useless_x'><b>SUPPORT</b></a>"
         )
     if not Config.ALIVE_MEDIA:
         await client.send_photo(
@@ -177,17 +177,17 @@ if userge.has_bot:
                 await asyncio.sleep(e.x)
             except BadRequest:
                 pass
-            ping = "𝗣𝗶𝗻𝗴: {} sec\n"
-        alive_s = "𝗘𝘅𝘁𝗿𝗮 𝗣𝗹𝘂𝗴𝗶𝗻𝘀 : {}\n".format(
+            ping = "𝗣𝗶𝗻𝗴:  🏓  {} sec\n"
+        alive_s = "➕ 𝗘𝘅𝘁𝗿𝗮 𝗣𝗹𝘂𝗴𝗶𝗻𝘀 : {}\n".format(
             _parse_arg(Config.LOAD_UNOFFICIAL_PLUGINS)
         )
-        alive_s += f"𝗦𝘂𝗱𝗼 : {_parse_arg(Config.SUDO_ENABLED)}\n"
-        alive_s += f"𝗔𝗻𝘁𝗶𝘀𝗽𝗮𝗺 : {_parse_arg(Config.ANTISPAM_SENTRY)}\n"
+        alive_s += f"👥 𝗦𝘂𝗱𝗼 : {_parse_arg(Config.SUDO_ENABLED)}\n"
+        alive_s += f"🚨 𝗔𝗻𝘁𝗶𝘀𝗽𝗮𝗺 : {_parse_arg(Config.ANTISPAM_SENTRY)}\n"
         if Config.HEROKU_APP and Config.RUN_DYNO_SAVER:
-            alive_s += "𝗗𝘆𝗻𝗼 𝗦𝗮𝘃𝗲𝗿 :  𝙴𝚗𝚊𝚋𝚕𝚎𝚍\n"
-        alive_s += f"𝗕𝗼𝘁 𝗙𝗼𝗿𝘄𝗮𝗿𝗱𝘀 : {_parse_arg(Config.BOT_FORWARDS)}\n"
-        alive_s += f"𝗣𝗠 𝗚𝘂𝗮𝗿𝗱 : {_parse_arg(not Config.ALLOW_ALL_PMS)}\n"
-        alive_s += f"𝗣𝗠 𝗟𝗼𝗴𝗴𝗲𝗿 : {_parse_arg(Config.PM_LOGGING)}"
+            alive_s += "⛽️ 𝗗𝘆𝗻𝗼 𝗦𝗮𝘃𝗲𝗿 :  ✅ 𝙴𝚗𝚊𝚋𝚕𝚎𝚍\n"
+        alive_s += f"💬 𝗕𝗼𝘁 𝗙𝗼𝗿𝘄𝗮𝗿𝗱𝘀 : {_parse_arg(Config.BOT_FORWARDS)}\n"
+        alive_s += f"🛡 𝗣𝗠 𝗚𝘂𝗮𝗿𝗱 : {_parse_arg(not Config.ALLOW_ALL_PMS)}\n"
+        alive_s += f"📝 𝗣𝗠 𝗟𝗼𝗴𝗴𝗲𝗿 : {_parse_arg(Config.PM_LOGGING)}"
         if allow:
             end = datetime.now()
             m_s = (end - start).microseconds / 1000
@@ -198,7 +198,7 @@ if userge.has_bot:
 
 
 def _parse_arg(arg: bool) -> str:
-    return " 𝙴𝚗𝚊𝚋𝚕𝚎𝚍" if arg else " 𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍"
+    return " ✅ 𝙴𝚗𝚊𝚋𝚕𝚎𝚍" if arg else " ❌ 𝙳𝚒𝚜𝚊𝚋𝚕𝚎𝚍"
 
 
 class Bot_Alive:
@@ -233,24 +233,24 @@ class Bot_Alive:
        <b>Pyrogram :</b>    <code>v{versions.__pyro_version__}</code>
        <b>𝑿 :</b>    <code>v{get_version()}</code>
 
-<b>{Bot_Alive._get_mode()}</b>    <code>|</code> UPTIME <b>{userge.uptime}</b>
+<b>{Bot_Alive._get_mode()}</b>    <code>|</code>    🕔  <b>{userge.uptime}</b>
 """
         return alive_info_
 
     @staticmethod
     def _get_mode() -> str:
         if RawClient.DUAL_MODE:
-            return "DUAL"
+            return "↕️  DUAL"
         if Config.BOT_TOKEN:
-            return "BOT"
-        return "USER"
+            return "🤖  BOT"
+        return "👤  USER"
 
     @staticmethod
     def alive_buttons() -> InlineKeyboardMarkup:
         buttons = [
             [
-                InlineKeyboardButton(text="SETTINGS", callback_data="settings_btn"),
-                InlineKeyboardButton(text="REPO", url=Config.UPSTREAM_REPO),
+                InlineKeyboardButton(text="🔧  SETTINGS", callback_data="settings_btn"),
+                InlineKeyboardButton(text="⚡  REPO", url=Config.UPSTREAM_REPO),
             ]
         ]
         return InlineKeyboardMarkup(buttons)
@@ -258,7 +258,7 @@ class Bot_Alive:
     @staticmethod
     def alive_default_imgs() -> str:
         alive_imgs = [
-            "https://telegra.ph/file/fa9d9b9e4e0f8d8cbfc3f.mp4",
+            "https://telegra.ph/file/ce7929b5eaf99a619c113.jpg",
         ]
         return rand_array(alive_imgs)
 
