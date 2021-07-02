@@ -256,11 +256,11 @@ class Bot_Alive:
         return InlineKeyboardMarkup(buttons)
 
     @staticmethod
-    def alive_default_media() -> str:
-        alive_media = [
+    def alive_default_imgs() -> str:
+        alive_imgs = [
             "https://telegra.ph/file/08a71cb88964f7c30fb8f.mp4",
         ]
-        return rand_array(alive_media)
+        return rand_array(alive_imgs)
 
     @staticmethod
     def get_bot_cached_fid() -> str:
